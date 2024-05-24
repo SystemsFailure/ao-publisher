@@ -10,6 +10,7 @@ interface AdObject {
 export default class CianPublisher implements PublisherStrategy {
     convert(adsData: any): any { return this.convertedInXML(adsData); }
     publish(data: any): any { return this.public(data); }
+    valid(filePath: string) {}
 
     // Реализация
     private public(data: any): any {

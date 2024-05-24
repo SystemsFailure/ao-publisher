@@ -8,6 +8,7 @@ import * as xmljs from 'xml-js';
 export default class YoulaPublisher implements PublisherStrategy {
     convert(adsData: any): any { return this.convertedInXML(adsData); }
     publish(data: any): any { return this.public(data); }
+    valid(filePath: string) { return this.validXMLFile() }
   
     private convertedInXML(data: any, options: ConvertInXMLOptions = {}): any {
       if (typeof data !== 'object' && typeof data !== 'string') {
@@ -32,6 +33,10 @@ export default class YoulaPublisher implements PublisherStrategy {
       } catch (error) {
           console.error('Ошибка при создании XML файла:', error);
       }
+    }
+
+    private validXMLFile() {
+      
     }
   
     // Данная пубиликация сделана через отправку сформированного файла через почту

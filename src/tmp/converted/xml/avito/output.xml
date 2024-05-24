@@ -1,0 +1,66 @@
+<Ads formatVersion="3" target="Avito.ru">
+    <Ad>
+        <Id>3</Id>
+        <Category>Квартиры</Category>
+        <Description>Новая, просторная, светлая и уютная квартира с ремонтом и
+большим холодильником. Комнаты изолированные, 
+11 и 10 метров, кухня 3 метра с балконом.</Description>
+        <Address>Тамбовская область, Моршанск, Лесная улица, 7</Address>
+        <OperationType>Сдам</OperationType>
+        <ContactPhone>
+                    +7 495 777-10-55
+                  </ContactPhone>
+        <Price>20000</Price>
+        <RoomType>Изолированные</RoomType>
+        <Renovation>Дизайнерский</Renovation>
+        <PropertyRights>Посредник</PropertyRights>
+        <LeaseType>На длительный срок</LeaseType>
+        <HouseType>Панельный</HouseType>
+        <Floor>3</Floor>
+        <Floors>12</Floors>
+        <Rooms>2</Rooms>
+        <Square>121</Square>
+        <LeaseDeposit>0,5 месяца</LeaseDeposit>
+        <LeaseCommissionSize>100</LeaseCommissionSize>
+        <KitchenSpace>33</KitchenSpace>
+        <UtilityMeters>Оплачивается арендатором</UtilityMeters>
+        <OtherUtilities>Оплачивается арендатором</OtherUtilities>
+        <OtherUtilitiesPayment>4500</OtherUtilitiesPayment>
+        <SmokingAllowed>Да</SmokingAllowed>
+        <ChildrenAllowed>Да</ChildrenAllowed>
+        <PetsAllowed>Да</PetsAllowed>
+        <AdStatus>Free</AdStatus>
+    </Ad>
+    <Ad>
+        <Id>4</Id>
+        <Category>Квартиры</Category>
+        <Description>Новая, просторная, светлая и уютная квартира с ремонтом и
+большим холодильником. Комнаты изолированные, 
+11 и 10 метров, кухня 3 метра с балконом.</Description>
+        <Address>Тамбовская область, Моршанск, Лесная улица, 7</Address>
+        <OperationType>Сдам</OperationType>
+        <ContactPhone>
+                    +7 495 777-10-44
+                  </ContactPhone>
+        <Price>20000</Price>
+        <RoomType>Изолированные</RoomType>
+        <Renovation>Дизайнерский</Renovation>
+        <PropertyRights>Посредник</PropertyRights>
+        <LeaseType>На длительный срок</LeaseType>
+        <HouseType>Панельный</HouseType>
+        <Floor>3</Floor>
+        <Floors>12</Floors>
+        <Rooms>2</Rooms>
+        <Square>121</Square>
+        <LeaseDeposit>0,5 месяца</LeaseDeposit>
+        <LeaseCommissionSize>100</LeaseCommissionSize>
+        <KitchenSpace>33</KitchenSpace>
+        <UtilityMeters>Оплачивается арендатором</UtilityMeters>
+        <OtherUtilities>Оплачивается арендатором</OtherUtilities>
+        <OtherUtilitiesPayment>4500</OtherUtilitiesPayment>
+        <SmokingAllowed>Да</SmokingAllowed>
+        <ChildrenAllowed>Да</ChildrenAllowed>
+        <PetsAllowed>Да</PetsAllowed>
+        <AdStatus>Free</AdStatus>
+    </Ad>
+</Ads>

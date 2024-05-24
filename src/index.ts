@@ -102,7 +102,7 @@ app.post('/upload', upload.single('file'), (req: Request, res: Response) => {
 app.post('/publish', async (req: Request, res: Response) => {
   const avitoPoster: Publisher = new Publisher();
 
-  avitoPoster.readExcel('./src/excel/1716479355382_Шаблон01.xlsx');
+  avitoPoster.readExcel('./src/excel/1716544484326_Шаблон01.xlsx');
   const transformedArr: GenericObject[] = transformArray(avitoPoster.ads);
 
   console.log(transformedArr);

@@ -21,6 +21,7 @@ export default class AvitoPublisher implements PublisherStrategy {
 
   convert(adsData: any): any { return this.convertedInXML(adsData); }
   publish(data: any): any { return this.public(data); }
+  valid(filePath: string) { return this.validXMLFile() }
 
   // Реализация
   public checkExcelFile() {}
@@ -34,6 +35,69 @@ export default class AvitoPublisher implements PublisherStrategy {
 
   private public(data: any): any {
     // Реализация публикации
+  }
+
+  // Парсим html результат валидации
+  private parseHtmlResponse(htmlString: string) : true | number {
+    const parser: DOMParser = new DOMParser();
+    const doc: Document = parser.parseFromString(htmlString, 'text/html');
+    
+    const rows: NodeListOf<Element> = doc.querySelectorAll('table.report tbody tr');
+  
+    // Преобразуем NodeList в массив
+    const rowsArray: Element[] = Array.from(rows);
+  
+    for (const row of rowsArray) {
+      const statusSpan = row.querySelector('td span.is-green');
+      const itemIdElement = row.querySelector('td.item-id');
+      
+      if (!statusSpan || statusSpan.textContent !== 'Соответствует формату') {
+        if (itemIdElement) {
+          const itemId: number = parseInt(itemIdElement.textContent || '0', 10);
+          return itemId;
+        }
+      }
+    }
+    
+    return true;
+  }
+
+  // Валидация xml фида через авито xml валидатор
+  private async validXMLFile(filePath: string = 'src/tmp/converted/xml/avito/output.xml') {
+    const url = 'https://autoload.avito.ru/api/v2/public/xml_checker/upload/';
+    
+    const headers = {
+      'Accept': '*/*',
+      'Accept-Encoding': 'gzip, deflate, br, zstd',
+      'Accept-Language': 'en-US,en;q=0.9,ru-RU;q=0.8,ru;q=0.7',
+      'Content-Type': 'text/xml',
+      'Dnt': '1',
+      'Origin': 'https://autoload.avito.ru',
+      'Priority': 'u=1, i',
+      'Referer': 'https://autoload.avito.ru/format/xmlcheck/',
+      'Sec-Ch-Ua': '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
+      'Sec-Ch-Ua-Mobile': '?0',
+      'Sec-Ch-Ua-Platform': '"Windows"',
+      'Sec-Fetch-Dest': 'empty',
+      'Sec-Fetch-Mode': 'cors',
+      'Sec-Fetch-Site': 'same-origin',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+    };
+  
+    const xmlData: string = fs.readFileSync(
+      filePath,
+      // path.resolve(__dirname, filePath), 
+      'utf-8'
+    );
+  
+    try {
+      const response = await axios.post(url, xmlData, { headers });
+      const html = response.data;
+      const result: number | true = this.parseHtmlResponse(html)
+      console.log(result);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
   }
 
   // access_token для авито

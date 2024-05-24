@@ -19,6 +19,10 @@ class PublisherContext {
       const convertedData = this.strategy.convert(adsData);
       return this.strategy.publish(convertedData);
     }
+
+    async validXml(filePath: string) {
+      await this.strategy.valid(filePath)
+    }
 }
 
 // Разделение объектов на отдельные массивы для каждой площадки
@@ -31,7 +35,7 @@ function splitAdsByPlatform(ads: any[]): { avitoAds: any[], cianAds: any[], youl
 }
 
 // Стратегическая функция
-export function publishAds(adsData: any[]) {
+export async function publishAds(adsData: any[]) {
   const { avitoAds, cianAds, youlaAds } = splitAdsByPlatform(adsData);
 
   const results = [];
@@ -39,6 +43,7 @@ export function publishAds(adsData: any[]) {
   if (avitoAds.length > 0) {
       const avitoPublisher = new PublisherContext(new AvitoPublisher());
       results.push(avitoPublisher.executeStrategy(avitoAds));
+      await avitoPublisher.validXml('')
   }
 
   if (cianAds.length > 0) {
