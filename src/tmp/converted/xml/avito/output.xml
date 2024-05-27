@@ -1,66 +1,60 @@
 <Ads formatVersion="3" target="Avito.ru">
     <Ad>
-        <Id>3</Id>
+        <Id>w1BThqzf3Ouof7ZI</Id>
         <Category>Квартиры</Category>
-        <Description>Новая, просторная, светлая и уютная квартира с ремонтом и
-большим холодильником. Комнаты изолированные, 
-11 и 10 метров, кухня 3 метра с балконом.</Description>
-        <Address>Тамбовская область, Моршанск, Лесная улица, 7</Address>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
         <OperationType>Сдам</OperationType>
-        <ContactPhone>
-                    +7 495 777-10-55
-                  </ContactPhone>
-        <Price>20000</Price>
+        <Price>0</Price>
         <RoomType>Изолированные</RoomType>
-        <Renovation>Дизайнерский</Renovation>
-        <PropertyRights>Посредник</PropertyRights>
+        <Renovation>Косметический</Renovation>
+        <PropertyRights>Собственник</PropertyRights>
         <LeaseType>На длительный срок</LeaseType>
-        <HouseType>Панельный</HouseType>
-        <Floor>3</Floor>
-        <Floors>12</Floors>
-        <Rooms>2</Rooms>
-        <Square>121</Square>
-        <LeaseDeposit>0,5 месяца</LeaseDeposit>
-        <LeaseCommissionSize>100</LeaseCommissionSize>
-        <KitchenSpace>33</KitchenSpace>
+        <HouseType>Кирпичный</HouseType>
+        <Floor>0</Floor>
+        <Floors>0</Floors>
+        <Rooms>Студия</Rooms>
+        <Square>0</Square>
+        <LeaseDeposit>1 месяц</LeaseDeposit>
+        <LeaseCommissionSize>0</LeaseCommissionSize>
+        <KitchenSpace>0</KitchenSpace>
         <UtilityMeters>Оплачивается арендатором</UtilityMeters>
         <OtherUtilities>Оплачивается арендатором</OtherUtilities>
-        <OtherUtilitiesPayment>4500</OtherUtilitiesPayment>
+        <OtherUtilitiesPayment>0</OtherUtilitiesPayment>
         <SmokingAllowed>Да</SmokingAllowed>
         <ChildrenAllowed>Да</ChildrenAllowed>
         <PetsAllowed>Да</PetsAllowed>
-        <AdStatus>Free</AdStatus>
+        <ContactPhone>
+                    +7 999 999 999
+                  </ContactPhone>
     </Ad>
     <Ad>
-        <Id>4</Id>
+        <Id>CTpYNlTULwBJxY2p</Id>
         <Category>Квартиры</Category>
-        <Description>Новая, просторная, светлая и уютная квартира с ремонтом и
-большим холодильником. Комнаты изолированные, 
-11 и 10 метров, кухня 3 метра с балконом.</Description>
-        <Address>Тамбовская область, Моршанск, Лесная улица, 7</Address>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
         <OperationType>Сдам</OperationType>
-        <ContactPhone>
-                    +7 495 777-10-44
-                  </ContactPhone>
-        <Price>20000</Price>
+        <Price>0</Price>
         <RoomType>Изолированные</RoomType>
-        <Renovation>Дизайнерский</Renovation>
-        <PropertyRights>Посредник</PropertyRights>
+        <Renovation>Косметический</Renovation>
+        <PropertyRights>Собственник</PropertyRights>
         <LeaseType>На длительный срок</LeaseType>
-        <HouseType>Панельный</HouseType>
-        <Floor>3</Floor>
-        <Floors>12</Floors>
-        <Rooms>2</Rooms>
-        <Square>121</Square>
-        <LeaseDeposit>0,5 месяца</LeaseDeposit>
-        <LeaseCommissionSize>100</LeaseCommissionSize>
-        <KitchenSpace>33</KitchenSpace>
+        <HouseType>Кирпичный</HouseType>
+        <Floor>0</Floor>
+        <Floors>0</Floors>
+        <Rooms>Студия</Rooms>
+        <Square>0</Square>
+        <LeaseDeposit>1 месяц</LeaseDeposit>
+        <LeaseCommissionSize>0</LeaseCommissionSize>
+        <KitchenSpace>0</KitchenSpace>
         <UtilityMeters>Оплачивается арендатором</UtilityMeters>
         <OtherUtilities>Оплачивается арендатором</OtherUtilities>
-        <OtherUtilitiesPayment>4500</OtherUtilitiesPayment>
+        <OtherUtilitiesPayment>0</OtherUtilitiesPayment>
         <SmokingAllowed>Да</SmokingAllowed>
         <ChildrenAllowed>Да</ChildrenAllowed>
         <PetsAllowed>Да</PetsAllowed>
-        <AdStatus>Free</AdStatus>
+        <ContactPhone>
+                    +7 999 999 999
+                  </ContactPhone>
     </Ad>
 </Ads>

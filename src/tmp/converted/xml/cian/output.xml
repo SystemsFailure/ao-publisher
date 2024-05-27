@@ -1,65 +1,61 @@
 <feed>
     <feed_version>2</feed_version>
     <object>
-        <ExternalId>1</ExternalId>
+        <ExternalId>141234</ExternalId>
         <Category>Квартиры</Category>
-        <Description>Новая, просторная, светлая и уютная квартира с ремонтом и
-большим холодильником. Комнаты изолированные, 
-11 и 10 метров, кухня 3 метра с балконом.</Description>
-        <Address>Тамбовская область, Моршанск, Лесная улица, 7</Address>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
         <BargainTerms>
             <UtilitiesTerms>
-                <Price>4500</Price>
+                <Price>0</Price>
             </UtilitiesTerms>
         </BargainTerms>
         <RoomType>Изолированные</RoomType>
-        <RepairType>Дизайнерский</RepairType>
+        <RepairType>Косметический</RepairType>
         <Building>
-            <FloorsCount>12</FloorsCount>
+            <FloorsCount>0</FloorsCount>
         </Building>
-        <FloorNumber>3</FloorNumber>
-        <FlatRoomsCount>2</FlatRoomsCount>
-        <TotalArea>121</TotalArea>
-        <KitchenArea>33</KitchenArea>
+        <FloorNumber>0</FloorNumber>
+        <FlatRoomsCount>Студия</FlatRoomsCount>
+        <TotalArea>0</TotalArea>
+        <KitchenArea>0</KitchenArea>
         <ChildrenAllowed>Да</ChildrenAllowed>
         <PetsAllowed>Да</PetsAllowed>
         <Phones>
             <PhonesSchema>
-                <CountryCode>495 777-10-66</CountryCode>
+                <CountryCode>999 999 999</CountryCode>
                 <Number>+7</Number>
             </PhonesSchema>
         </Phones>
-        <RoomArea>12.5</RoomArea>
+        <RoomArea>0</RoomArea>
     </object>
     <object>
-        <ExternalId>2</ExternalId>
+        <ExternalId>1453214</ExternalId>
         <Category>Квартиры</Category>
-        <Description>Новая, просторная, светлая и уютная квартира с ремонтом и
-большим холодильником. Комнаты изолированные, 
-11 и 10 метров, кухня 3 метра с балконом.</Description>
-        <Address>Тамбовская область, Моршанск, Лесная улица, 7</Address>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
         <BargainTerms>
             <UtilitiesTerms>
-                <Price>4500</Price>
+                <Price>0</Price>
             </UtilitiesTerms>
         </BargainTerms>
         <RoomType>Изолированные</RoomType>
-        <RepairType>Дизайнерский</RepairType>
+        <RepairType>Косметический</RepairType>
         <Building>
-            <FloorsCount>12</FloorsCount>
+            <FloorsCount>0</FloorsCount>
         </Building>
-        <FloorNumber>3</FloorNumber>
-        <FlatRoomsCount>2</FlatRoomsCount>
-        <TotalArea>121</TotalArea>
-        <KitchenArea>33</KitchenArea>
+        <FloorNumber>0</FloorNumber>
+        <FlatRoomsCount>Студия</FlatRoomsCount>
+        <TotalArea>0</TotalArea>
+        <KitchenArea>0</KitchenArea>
         <ChildrenAllowed>Да</ChildrenAllowed>
         <PetsAllowed>Да</PetsAllowed>
         <Phones>
             <PhonesSchema>
-                <CountryCode>495 777-10-55</CountryCode>
+                <CountryCode>999 999 999</CountryCode>
                 <Number>+7</Number>
             </PhonesSchema>
         </Phones>
-        <RoomArea>12.5</RoomArea>
+        <RoomArea>0</RoomArea>
     </object>
 </feed>

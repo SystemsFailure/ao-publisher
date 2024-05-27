@@ -4,6 +4,8 @@ import xlsx from 'xlsx';
 import multer from 'multer';
 import { AdData } from './types';
 import { publishAds } from './strategy/ContextStrategy';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 // import CombinedClass from './mixins/context.mixin';
 
 // extends CombinedClass
@@ -46,8 +48,19 @@ class Publisher {
   }
 }
 
+// Настройка CORS
+const corsOptions = {
+  origin: '*', // Разрешить запросы с любых источников. Можно указать конкретные домены
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Указываем разрешенные методы
+  allowedHeaders: ['Content-Type', 'Authorization'] // Указываем разрешенные заголовки
+};
+
 const app = express();
 const port = 3000;
+
+app.use(express.json())
+app.use(cors(corsOptions));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Настройка multer для сохранения загруженных файлов
 const storage = multer.diskStorage({
@@ -86,6 +99,23 @@ const transformArray = (arr: GenericObject[]): GenericObject[] => {
 /**
  * Запросы
  */
+
+app.post('/upload-json', (req: Request, res: Response) => {
+  const jsonObjectString = req.body.jsonObject;
+  let listAds;
+  try {
+    listAds = JSON.parse(jsonObjectString);
+  } catch (error) {
+    return res.status(400).json({ error: 'Invalid JSON format' });
+  }
+
+  const transformedArr: GenericObject[] = transformArray(listAds);
+  publishAds(transformedArr)
+
+  console.log('Данные : ', listAds);
+
+  res.json({ message: 'JSON received successfully', data: "dwijaroierteryjk" });
+});
 
 app.post('/upload', upload.single('file'), (req: Request, res: Response) => {
   if (!req.file) {

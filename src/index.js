@@ -44,6 +44,8 @@ var axios_1 = __importDefault(require("axios"));
 var xlsx_1 = __importDefault(require("xlsx"));
 var multer_1 = __importDefault(require("multer"));
 var ContextStrategy_1 = require("./strategy/ContextStrategy");
+var body_parser_1 = __importDefault(require("body-parser"));
+var cors_1 = __importDefault(require("cors"));
 // import CombinedClass from './mixins/context.mixin';
 // extends CombinedClass
 var Publisher = /** @class */ (function () {
@@ -101,8 +103,17 @@ var Publisher = /** @class */ (function () {
     };
     return Publisher;
 }());
+// Настройка CORS
+var corsOptions = {
+    origin: '*', // Разрешить запросы с любых источников. Можно указать конкретные домены
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Указываем разрешенные методы
+    allowedHeaders: ['Content-Type', 'Authorization'] // Указываем разрешенные заголовки
+};
 var app = (0, express_1.default)();
 var port = 3000;
+app.use(express_1.default.json());
+app.use((0, cors_1.default)(corsOptions));
+app.use(body_parser_1.default.urlencoded({ extended: true }));
 // Настройка multer для сохранения загруженных файлов
 var storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -134,6 +145,20 @@ var transformArray = function (arr) {
 /**
  * Запросы
  */
+app.post('/upload-json', function (req, res) {
+    var jsonObjectString = req.body.jsonObject;
+    var listAds;
+    try {
+        listAds = JSON.parse(jsonObjectString);
+    }
+    catch (error) {
+        return res.status(400).json({ error: 'Invalid JSON format' });
+    }
+    var transformedArr = transformArray(listAds);
+    (0, ContextStrategy_1.publishAds)(transformedArr);
+    console.log('Данные : ', listAds);
+    res.json({ message: 'JSON received successfully', data: "dwijaroierteryjk" });
+});
 app.post('/upload', upload.single('file'), function (req, res) {
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
