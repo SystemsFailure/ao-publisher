@@ -150,7 +150,7 @@ app.post('/publish', function (req, res) { return __awaiter(void 0, void 0, void
         avitoPoster = new Publisher();
         avitoPoster.readExcel('./src/excel/1716544484326_Шаблон01.xlsx');
         transformedArr = transformArray(avitoPoster.ads);
-        console.log(transformedArr);
+        // console.log(transformedArr);
         (0, ContextStrategy_1.publishAds)(transformedArr);
         res.send('Ads have been posted successfully');
         return [2 /*return*/];

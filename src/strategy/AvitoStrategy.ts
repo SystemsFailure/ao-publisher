@@ -3,6 +3,7 @@ import { PublisherStrategy } from "./types";
 import { AuthorizationResponse, Credentials } from '../types';
 import * as xmljs from 'xml-js';
 import * as fs from 'fs';
+import cheerio from 'cheerio';
 
 interface AdObject {
   Id: string;
@@ -38,27 +39,28 @@ export default class AvitoPublisher implements PublisherStrategy {
   }
 
   // Парсим html результат валидации
-  private parseHtmlResponse(htmlString: string) : true | number {
-    const parser: DOMParser = new DOMParser();
-    const doc: Document = parser.parseFromString(htmlString, 'text/html');
+  private parseHtmlResponse(htmlString: string): true | number {
+    const $ = cheerio.load(htmlString);
     
-    const rows: NodeListOf<Element> = doc.querySelectorAll('table.report tbody tr');
-  
-    // Преобразуем NodeList в массив
-    const rowsArray: Element[] = Array.from(rows);
-  
-    for (const row of rowsArray) {
-      const statusSpan = row.querySelector('td span.is-green');
-      const itemIdElement = row.querySelector('td.item-id');
-      
-      if (!statusSpan || statusSpan.textContent !== 'Соответствует формату') {
-        if (itemIdElement) {
-          const itemId: number = parseInt(itemIdElement.textContent || '0', 10);
-          return itemId;
-        }
-      }
+    const rows = $('table.report tbody tr').toArray();
+
+    if(!rows) {
+      throw new Error('rows is empty or undefined or not valid')
     }
-    
+
+    for (const row of rows) {
+        const statusSpan = $(row).find('td span.is-green');
+        const itemIdElement = $(row).find('td.item-id');
+
+        console.log(`Объект с ID: ${itemIdElement.text()} - ${statusSpan.text()}`)
+        
+        if (!statusSpan.length || statusSpan.text() !== 'Соответствует формату') {
+            if (itemIdElement.length) {
+                const itemId: number = parseInt(itemIdElement.text() || '0', 10);
+                return itemId;
+            }
+        }
+    }
     return true;
   }
 
@@ -92,9 +94,16 @@ export default class AvitoPublisher implements PublisherStrategy {
   
     try {
       const response = await axios.post(url, xmlData, { headers });
-      const html = response.data;
+
+      if(!response.data['data'] || !response.data['data']['id']) {
+        throw new Error('Данные для дальнейшей валидации не получены')
+      }
+
+      const _response = await axios.get(`https://autoload.avito.ru/api/v2/public/xml_checker/result/${response.data['data']['id']}/`)
+
+      const html = _response.data;
       const result: number | true = this.parseHtmlResponse(html)
-      console.log(result);
+      console.log('Результат провекри xml фида для avito: ', result);
     } catch (error) {
       console.error('Error uploading file:', error);
     }

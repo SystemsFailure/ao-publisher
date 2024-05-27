@@ -105,7 +105,7 @@ app.post('/publish', async (req: Request, res: Response) => {
   avitoPoster.readExcel('./src/excel/1716544484326_Шаблон01.xlsx');
   const transformedArr: GenericObject[] = transformArray(avitoPoster.ads);
 
-  console.log(transformedArr);
+  // console.log(transformedArr);
   publishAds(transformedArr)
 
   res.send('Ads have been posted successfully');

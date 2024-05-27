@@ -76,6 +76,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
 var xmljs = __importStar(require("xml-js"));
 var fs = __importStar(require("fs"));
+var cheerio_1 = __importDefault(require("cheerio"));
 var AvitoPublisher = /** @class */ (function () {
     function AvitoPublisher() {
         this.accessToken = '';
@@ -97,18 +98,19 @@ var AvitoPublisher = /** @class */ (function () {
     };
     // Парсим html результат валидации
     AvitoPublisher.prototype.parseHtmlResponse = function (htmlString) {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(htmlString, 'text/html');
-        var rows = doc.querySelectorAll('table.report tbody tr');
-        // Преобразуем NodeList в массив
-        var rowsArray = Array.from(rows);
-        for (var _i = 0, rowsArray_1 = rowsArray; _i < rowsArray_1.length; _i++) {
-            var row = rowsArray_1[_i];
-            var statusSpan = row.querySelector('td span.is-green');
-            var itemIdElement = row.querySelector('td.item-id');
-            if (!statusSpan || statusSpan.textContent !== 'Соответствует формату') {
-                if (itemIdElement) {
-                    var itemId = parseInt(itemIdElement.textContent || '0', 10);
+        var $ = cheerio_1.default.load(htmlString);
+        var rows = $('table.report tbody tr').toArray();
+        if (!rows) {
+            throw new Error('rows is empty or undefined or not valid');
+        }
+        for (var _i = 0, rows_1 = rows; _i < rows_1.length; _i++) {
+            var row = rows_1[_i];
+            var statusSpan = $(row).find('td span.is-green');
+            var itemIdElement = $(row).find('td.item-id');
+            console.log("\u041E\u0431\u044A\u0435\u043A\u0442 \u0441 ID: ".concat(itemIdElement.text(), " - ").concat(statusSpan.text()));
+            if (!statusSpan.length || statusSpan.text() !== 'Соответствует формату') {
+                if (itemIdElement.length) {
+                    var itemId = parseInt(itemIdElement.text() || '0', 10);
                     return itemId;
                 }
             }
@@ -118,7 +120,7 @@ var AvitoPublisher = /** @class */ (function () {
     // Валидация xml фида через авито xml валидатор
     AvitoPublisher.prototype.validXMLFile = function () {
         return __awaiter(this, arguments, void 0, function (filePath) {
-            var url, headers, xmlData, response, html, result, error_1;
+            var url, headers, xmlData, response, _response, html, result, error_1;
             if (filePath === void 0) { filePath = 'src/tmp/converted/xml/avito/output.xml'; }
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -146,19 +148,25 @@ var AvitoPublisher = /** @class */ (function () {
                         'utf-8');
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([1, 4, , 5]);
                         return [4 /*yield*/, axios_1.default.post(url, xmlData, { headers: headers })];
                     case 2:
                         response = _a.sent();
-                        html = response.data;
-                        result = this.parseHtmlResponse(html);
-                        console.log(result);
-                        return [3 /*break*/, 4];
+                        if (!response.data['data'] || !response.data['data']['id']) {
+                            throw new Error('Данные для дальнейшей валидации не получены');
+                        }
+                        return [4 /*yield*/, axios_1.default.get("https://autoload.avito.ru/api/v2/public/xml_checker/result/".concat(response.data['data']['id'], "/"))];
                     case 3:
+                        _response = _a.sent();
+                        html = _response.data;
+                        result = this.parseHtmlResponse(html);
+                        console.log('Результат провекри xml фида для avito: ', result);
+                        return [3 /*break*/, 5];
+                    case 4:
                         error_1 = _a.sent();
                         console.error('Error uploading file:', error_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
