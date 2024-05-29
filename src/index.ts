@@ -6,6 +6,7 @@ import { AdData } from './types';
 import { publishAds } from './strategy/ContextStrategy';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { Database } from './database/utils/Database';
 // import CombinedClass from './mixins/context.mixin';
 
 // extends CombinedClass
@@ -149,6 +150,8 @@ app.post('/upload-ads-files', (req: Request, res: Response) => {
   // Запрос на сохранения файлов в mongo для объектов
 })
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+Database.connect().then(() => {
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
 });

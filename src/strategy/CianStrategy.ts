@@ -42,10 +42,12 @@ export default class CianPublisher implements PublisherStrategy {
       const result: IFileData = await this.saveFileInStorage(filePath);
       const row: IFile = await this.saveFileInDatabase(result)
       console.log('Файл успешно сохранен, его данные:' , result);
+      console.log('row: ', row)
 
       // Здесь записываем файл в storage
       // Также сохраняем его в mongodb
       // Далее прописываем логику публикации, через отправку ссылки на почту import@cian.ru
+
     }
 
     private async saveFileInStorage(filePath: string): Promise<IFileData> {

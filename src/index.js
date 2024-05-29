@@ -46,6 +46,7 @@ var multer_1 = __importDefault(require("multer"));
 var ContextStrategy_1 = require("./strategy/ContextStrategy");
 var body_parser_1 = __importDefault(require("body-parser"));
 var cors_1 = __importDefault(require("cors"));
+var Database_1 = require("./database/utils/Database");
 // import CombinedClass from './mixins/context.mixin';
 // extends CombinedClass
 var Publisher = /** @class */ (function () {
@@ -187,6 +188,8 @@ app.post('/publish', function (req, res) { return __awaiter(void 0, void 0, void
 app.post('/upload-ads-files', function (req, res) {
     // Запрос на сохранения файлов в mongo для объектов
 });
-app.listen(port, function () {
-    console.log("Server running at http://localhost:".concat(port, "/"));
+Database_1.Database.connect().then(function () {
+    app.listen(port, function () {
+        console.log("Server is running on port ".concat(port));
+    });
 });

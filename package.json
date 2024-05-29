@@ -10,6 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
     "@types/form-data": "^2.5.0",
     "axios": "^1.6.8",

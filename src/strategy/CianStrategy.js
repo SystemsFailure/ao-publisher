@@ -69,6 +69,7 @@ var cheerio_1 = __importDefault(require("cheerio"));
 var crypto_1 = require("crypto");
 var cian_headers_1 = require("../helpers/cian.headers");
 var storage_1 = require("../storage");
+var FileService_1 = require("../database/services/FileService");
 ;
 ;
 function generateUniqueId() {
@@ -85,13 +86,17 @@ var CianPublisher = /** @class */ (function () {
     // Реализация
     CianPublisher.prototype.public = function (filePath) {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
+            var result, row;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.saveFileInStorage(filePath)];
                     case 1:
                         result = _a.sent();
+                        return [4 /*yield*/, this.saveFileInDatabase(result)];
+                    case 2:
+                        row = _a.sent();
                         console.log('Файл успешно сохранен, его данные:', result);
+                        console.log('row: ', row);
                         return [2 /*return*/];
                 }
             });
@@ -106,7 +111,6 @@ var CianPublisher = /** @class */ (function () {
                         file = fs.readFileSync(filePath);
                         storage = new storage_1.FirebaseStorage();
                         fileName = filePath.split('_')[1];
-                        console.log(fileName);
                         if (!fileName) {
                             throw new Error('Не получилось извлечь имя файла');
                         }
@@ -116,7 +120,31 @@ var CianPublisher = /** @class */ (function () {
                         return [4 /*yield*/, storage.getFile(result.metadata.fullPath)];
                     case 2:
                         url = _a.sent();
-                        return [2 /*return*/, url];
+                        return [2 /*return*/, {
+                                storagePath: url,
+                                name: result.metadata.name,
+                                localPath: filePath,
+                                size: result.metadata.size,
+                            }];
+                }
+            });
+        });
+    };
+    CianPublisher.prototype.saveFileInDatabase = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var fileService, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        fileService = new FileService_1.FileService();
+                        return [4 /*yield*/, fileService.createFile(data)];
+                    case 1:
+                        result = _a.sent();
+                        if (!result) {
+                            throw new Error("\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442 \u0437\u0430\u043F\u0438\u0441\u0438 \u0444\u0430\u0439\u043B\u0430 \u0432 \u0431\u0430\u0437\u0443 \u0434\u0430\u043D\u043D\u044B\u0445 : ".concat(result));
+                        }
+                        console.debug("Данный файл успешно записан в базу данных");
+                        return [2 /*return*/, result];
                 }
             });
         });
@@ -126,7 +154,7 @@ var CianPublisher = /** @class */ (function () {
         var xml = xmljs.js2xml(json, { compact: true, spaces: 4 });
         var fileName = "src/tmp/converted/xml/cian/_".concat(generateUniqueId(), ".xml");
         fs.writeFileSync(fileName, xml);
-        console.log('successfuly formated in xml cian');
+        console.debug('successfuly formated in xml cian');
         return fileName;
     };
     CianPublisher.prototype.transformJson = function (objects) {

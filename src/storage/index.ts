@@ -12,6 +12,7 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import { firebaseConfig } from "../helpers/storage.config";
 
+
 const appBase = initializeApp(firebaseConfig);
 const storage = getStorage(appBase)
 
@@ -56,17 +57,12 @@ export class FirebaseStorage {
       });
     }
   
-    // Получить один файл
-    async getFile(fileName: any) : Promise<string> {
-      let __URL__;
+    async getFile(fileName: string) {
+      let URL;
       const localRef = ref(storage, fileName);
-      const url = await getDownloadURL(localRef)
-      const __httpx__ = new XMLHttpRequest();
-      __httpx__.responseType = 'blob';
-      __httpx__.open('GET', url)
-      __httpx__.send();
-      __URL__ = url
-      return __URL__;
+      const url = await getDownloadURL(localRef);
+      URL = url;
+      return URL;
     }
   
     // Получить метаданные файла

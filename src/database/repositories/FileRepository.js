@@ -36,91 +36,54 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FirebaseStorage = void 0;
-var storage_1 = require("firebase/storage");
-var app_1 = require("firebase/app");
-var storage_2 = require("firebase/storage");
-var storage_config_1 = require("../helpers/storage.config");
-var appBase = (0, app_1.initializeApp)(storage_config_1.firebaseConfig);
-var storage = (0, storage_2.getStorage)(appBase);
-var FirebaseStorage = /** @class */ (function () {
-    function FirebaseStorage() {
-        console.debug('[DATA OF STORAGE] \n', "MAX operationTime: ".concat(storage.maxOperationRetryTime, "  \n"), "MAX uploadTime: ".concat(storage.maxUploadRetryTime, "  \n"));
+exports.FileRepository = void 0;
+var File_1 = require("../models/File");
+var FileRepository = /** @class */ (function () {
+    function FileRepository() {
     }
-    // Получить все файлы
-    FirebaseStorage.prototype.getAllFiles = function (limit, limit2) {
+    FileRepository.prototype.create = function (file) {
         return __awaiter(this, void 0, void 0, function () {
-            var listRef, firstPage, secondPage;
+            var newFile;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        listRef = (0, storage_1.ref)(storage, 'files/uid');
-                        return [4 /*yield*/, (0, storage_1.list)(listRef, { maxResults: limit })];
-                    case 1:
-                        firstPage = _a.sent();
-                        if (!firstPage.nextPageToken) return [3 /*break*/, 3];
-                        return [4 /*yield*/, (0, storage_1.list)(listRef, {
-                                maxResults: limit2,
-                                pageToken: firstPage.nextPageToken,
-                            })];
-                    case 2:
-                        secondPage = _a.sent();
-                        return [2 /*return*/, secondPage];
-                    case 3: return [2 /*return*/];
+                        newFile = new File_1.File(file);
+                        return [4 /*yield*/, newFile.save()];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    // Записать новый файл
-    FirebaseStorage.prototype.uploadFile = function (file, fileName) {
+    FileRepository.prototype.findById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var localRef, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        localRef = (0, storage_1.ref)(storage, fileName);
-                        return [4 /*yield*/, (0, storage_1.uploadBytes)(localRef, file)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, result];
+                    case 0: return [4 /*yield*/, File_1.File.findById(id)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    // Удалить файл
-    FirebaseStorage.prototype.deleteFile = function (fileName) {
-        var localRef = (0, storage_1.ref)(storage, fileName);
-        (0, storage_1.deleteObject)(localRef).then(function () {
-            return true;
-        }).catch(function (error) {
-            console.error(error);
-        });
-    };
-    FirebaseStorage.prototype.getFile = function (fileName) {
+    FileRepository.prototype.findAll = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var URL, localRef, url;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        localRef = (0, storage_1.ref)(storage, fileName);
-                        return [4 /*yield*/, (0, storage_1.getDownloadURL)(localRef)];
-                    case 1:
-                        url = _a.sent();
-                        URL = url;
-                        return [2 /*return*/, URL];
+                    case 0: return [4 /*yield*/, File_1.File.find()];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    // Получить метаданные файла
-    FirebaseStorage.prototype.getFileMetadata = function (fileName) {
-        var __metadata__ = null;
-        var localRef = (0, storage_1.ref)(storage, fileName);
-        (0, storage_1.getMetadata)(localRef).then(function (metadata) {
-            __metadata__ = metadata;
-        }).catch(function (e) { return console.error(e); });
-        return __metadata__;
+    FileRepository.prototype.update = function (id, file) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, File_1.File.findByIdAndUpdate(id, file, { new: true })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
     };
-    return FirebaseStorage;
+    return FileRepository;
 }());
-exports.FirebaseStorage = FirebaseStorage;
+exports.FileRepository = FileRepository;

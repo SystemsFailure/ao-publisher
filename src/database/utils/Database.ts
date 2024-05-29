@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const config = {
-    mongoUri: 'your-mongodb-connection-string-here'
+    mongoUri: 'mongodb://localhost:27017/'
 };
 
 export class Database {
