@@ -141,7 +141,13 @@ app.post('/publish', async (req: Request, res: Response) => {
   res.send('Ads have been posted successfully');
 });
 
-app.get('');
+// app.post('/upload-excel', (req: Request, res: Response) => {
+//   // Запрос для сохранения 
+// })
+
+app.post('/upload-ads-files', (req: Request, res: Response) => {
+  // Запрос на сохранения файлов в mongo для объектов
+})
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);

@@ -1,60 +1,37 @@
 <feed>
     <feed_version>2</feed_version>
     <object>
-        <ExternalId>141234</ExternalId>
-        <Category>Квартиры</Category>
+        <ExternalId>813p440m0OfnrSi1</ExternalId>
+        <Category>flatRent</Category>
         <Description>Описание объекта...</Description>
         <Address>Полный адрес объекта...</Address>
+        <RoomType>separate</RoomType>
+        <RepairType>cosmetic</RepairType>
         <BargainTerms>
+            <LeaseTermType>longTerm</LeaseTermType>
+            <Price>12000</Price>
+            <Deposit>24000</Deposit>
             <UtilitiesTerms>
+                <IncludedInPrice>False</IncludedInPrice>
                 <Price>0</Price>
             </UtilitiesTerms>
+            <ClientFee>100%</ClientFee>
         </BargainTerms>
-        <RoomType>Изолированные</RoomType>
-        <RepairType>Косметический</RepairType>
         <Building>
+            <MaterialType>bric</MaterialType>
             <FloorsCount>0</FloorsCount>
         </Building>
         <FloorNumber>0</FloorNumber>
-        <FlatRoomsCount>Студия</FlatRoomsCount>
+        <FlatRoomsCount>9</FlatRoomsCount>
         <TotalArea>0</TotalArea>
         <KitchenArea>0</KitchenArea>
-        <ChildrenAllowed>Да</ChildrenAllowed>
-        <PetsAllowed>Да</PetsAllowed>
+        <ChildrenAllowed>True</ChildrenAllowed>
+        <PetsAllowed>True</PetsAllowed>
         <Phones>
-            <PhonesSchema>
-                <CountryCode>999 999 999</CountryCode>
-                <Number>+7</Number>
-            </PhonesSchema>
-        </Phones>
-        <RoomArea>0</RoomArea>
-    </object>
-    <object>
-        <ExternalId>1453214</ExternalId>
-        <Category>Квартиры</Category>
-        <Description>Описание объекта...</Description>
-        <Address>Полный адрес объекта...</Address>
-        <BargainTerms>
-            <UtilitiesTerms>
-                <Price>0</Price>
-            </UtilitiesTerms>
-        </BargainTerms>
-        <RoomType>Изолированные</RoomType>
-        <RepairType>Косметический</RepairType>
-        <Building>
-            <FloorsCount>0</FloorsCount>
-        </Building>
-        <FloorNumber>0</FloorNumber>
-        <FlatRoomsCount>Студия</FlatRoomsCount>
-        <TotalArea>0</TotalArea>
-        <KitchenArea>0</KitchenArea>
-        <ChildrenAllowed>Да</ChildrenAllowed>
-        <PetsAllowed>Да</PetsAllowed>
-        <Phones>
-            <PhonesSchema>
-                <CountryCode>999 999 999</CountryCode>
-                <Number>+7</Number>
-            </PhonesSchema>
+            <PhoneSchema>
+                <CountryCode>+7</CountryCode>
+                <Number>999 999 999</Number>
+            </PhoneSchema>
         </Phones>
         <RoomArea>0</RoomArea>
     </object>

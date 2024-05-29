@@ -120,7 +120,7 @@ var AvitoPublisher = /** @class */ (function () {
     // Валидация xml фида через авито xml валидатор
     AvitoPublisher.prototype.validXMLFile = function () {
         return __awaiter(this, arguments, void 0, function (filePath) {
-            var url, headers, xmlData, response, _response, html, result, error_1;
+            var url, headers, xmlData, response, subResponse, html, result, error_1;
             if (filePath === void 0) { filePath = 'src/tmp/converted/xml/avito/output.xml'; }
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -157,9 +157,13 @@ var AvitoPublisher = /** @class */ (function () {
                         }
                         return [4 /*yield*/, axios_1.default.get("https://autoload.avito.ru/api/v2/public/xml_checker/result/".concat(response.data['data']['id'], "/"))];
                     case 3:
-                        _response = _a.sent();
-                        html = _response.data;
+                        subResponse = _a.sent();
+                        html = subResponse.data;
                         result = this.parseHtmlResponse(html);
+                        if (!result) {
+                            console.debug('result is not valid, maybe, NaN');
+                            return [2 /*return*/];
+                        }
                         console.log('Результат провекри xml фида для avito: ', result);
                         return [3 /*break*/, 5];
                     case 4:

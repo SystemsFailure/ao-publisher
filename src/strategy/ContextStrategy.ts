@@ -16,8 +16,8 @@ class PublisherContext {
     }
   
     executeStrategy(adsData: any): any {
-      const convertedData = this.strategy.convert(adsData);
-      return this.strategy.publish(convertedData);
+      const convertedFilePath = this.strategy.convert(adsData);
+      return this.strategy.publish(convertedFilePath);
     }
 
     async validXml(filePath: string) {

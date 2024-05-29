@@ -4,6 +4,7 @@ import { AuthorizationResponse, Credentials } from '../types';
 import * as xmljs from 'xml-js';
 import * as fs from 'fs';
 import cheerio from 'cheerio';
+import { headers } from '../helpers/avito.headers';
 
 interface AdObject {
   Id: string;
@@ -68,27 +69,8 @@ export default class AvitoPublisher implements PublisherStrategy {
   private async validXMLFile(filePath: string = 'src/tmp/converted/xml/avito/output.xml') {
     const url = 'https://autoload.avito.ru/api/v2/public/xml_checker/upload/';
     
-    const headers = {
-      'Accept': '*/*',
-      'Accept-Encoding': 'gzip, deflate, br, zstd',
-      'Accept-Language': 'en-US,en;q=0.9,ru-RU;q=0.8,ru;q=0.7',
-      'Content-Type': 'text/xml',
-      'Dnt': '1',
-      'Origin': 'https://autoload.avito.ru',
-      'Priority': 'u=1, i',
-      'Referer': 'https://autoload.avito.ru/format/xmlcheck/',
-      'Sec-Ch-Ua': '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
-      'Sec-Ch-Ua-Mobile': '?0',
-      'Sec-Ch-Ua-Platform': '"Windows"',
-      'Sec-Fetch-Dest': 'empty',
-      'Sec-Fetch-Mode': 'cors',
-      'Sec-Fetch-Site': 'same-origin',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
-    };
-  
     const xmlData: string = fs.readFileSync(
       filePath,
-      // path.resolve(__dirname, filePath), 
       'utf-8'
     );
   
@@ -99,10 +81,16 @@ export default class AvitoPublisher implements PublisherStrategy {
         throw new Error('Данные для дальнейшей валидации не получены')
       }
 
-      const _response = await axios.get(`https://autoload.avito.ru/api/v2/public/xml_checker/result/${response.data['data']['id']}/`)
+      const subResponse = await axios.get(`https://autoload.avito.ru/api/v2/public/xml_checker/result/${response.data['data']['id']}/`)
 
-      const html = _response.data;
+      const html = subResponse.data;
       const result: number | true = this.parseHtmlResponse(html)
+
+      if(!result) {
+        console.debug('result is not valid, maybe, NaN')
+        return
+      }
+
       console.log('Результат провекри xml фида для avito: ', result);
     } catch (error) {
       console.error('Error uploading file:', error);

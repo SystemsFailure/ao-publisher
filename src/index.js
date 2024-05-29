@@ -181,7 +181,12 @@ app.post('/publish', function (req, res) { return __awaiter(void 0, void 0, void
         return [2 /*return*/];
     });
 }); });
-app.get('');
+// app.post('/upload-excel', (req: Request, res: Response) => {
+//   // Запрос для сохранения 
+// })
+app.post('/upload-ads-files', function (req, res) {
+    // Запрос на сохранения файлов в mongo для объектов
+});
 app.listen(port, function () {
     console.log("Server running at http://localhost:".concat(port, "/"));
 });
