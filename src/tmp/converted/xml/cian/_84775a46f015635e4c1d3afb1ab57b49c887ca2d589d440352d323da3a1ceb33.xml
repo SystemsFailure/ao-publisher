@@ -1,0 +1,143 @@
+<feed>
+    <feed_version>2</feed_version>
+    <object>
+        <ExternalId>GKBPQi8v4dg6GtZy</ExternalId>
+        <Category>flatRent</Category>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
+        <RoomType>separate</RoomType>
+        <RepairType>cosmetic</RepairType>
+        <BargainTerms>
+            <LeaseTermType>longTerm</LeaseTermType>
+            <Price>0</Price>
+            <Deposit>0</Deposit>
+            <UtilitiesTerms>
+                <IncludedInPrice>False</IncludedInPrice>
+                <Price>0</Price>
+            </UtilitiesTerms>
+            <ClientFee>0</ClientFee>
+        </BargainTerms>
+        <Building>
+            <MaterialType>bric</MaterialType>
+            <FloorsCount>0</FloorsCount>
+        </Building>
+        <FloorNumber>0</FloorNumber>
+        <FlatRoomsCount>9</FlatRoomsCount>
+        <TotalArea>0</TotalArea>
+        <KitchenArea>0</KitchenArea>
+        <ChildrenAllowed>True</ChildrenAllowed>
+        <PetsAllowed>True</PetsAllowed>
+        <Phones>
+            <PhoneSchema>
+                <CountryCode>+7</CountryCode>
+                <Number>999 999 999</Number>
+            </PhoneSchema>
+        </Phones>
+        <RoomArea>0</RoomArea>
+    </object>
+    <object>
+        <ExternalId>813p440m0OfnrSi1</ExternalId>
+        <Category>flatRent</Category>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
+        <RoomType>separate</RoomType>
+        <RepairType>cosmetic</RepairType>
+        <BargainTerms>
+            <LeaseTermType>longTerm</LeaseTermType>
+            <Price>0</Price>
+            <Deposit>0</Deposit>
+            <UtilitiesTerms>
+                <IncludedInPrice>False</IncludedInPrice>
+                <Price>0</Price>
+            </UtilitiesTerms>
+            <ClientFee>0</ClientFee>
+        </BargainTerms>
+        <Building>
+            <MaterialType>bric</MaterialType>
+            <FloorsCount>0</FloorsCount>
+        </Building>
+        <FloorNumber>0</FloorNumber>
+        <FlatRoomsCount>9</FlatRoomsCount>
+        <TotalArea>0</TotalArea>
+        <KitchenArea>0</KitchenArea>
+        <ChildrenAllowed>True</ChildrenAllowed>
+        <PetsAllowed>True</PetsAllowed>
+        <Phones>
+            <PhoneSchema>
+                <CountryCode>+7</CountryCode>
+                <Number>999 999 999</Number>
+            </PhoneSchema>
+        </Phones>
+        <RoomArea>0</RoomArea>
+    </object>
+    <object>
+        <ExternalId>813p440m0OfnrSi1</ExternalId>
+        <Category>flatRent</Category>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
+        <RoomType>separate</RoomType>
+        <RepairType>cosmetic</RepairType>
+        <BargainTerms>
+            <LeaseTermType>longTerm</LeaseTermType>
+            <Price>0</Price>
+            <Deposit>0</Deposit>
+            <UtilitiesTerms>
+                <IncludedInPrice>False</IncludedInPrice>
+                <Price>0</Price>
+            </UtilitiesTerms>
+            <ClientFee>0</ClientFee>
+        </BargainTerms>
+        <Building>
+            <MaterialType>bric</MaterialType>
+            <FloorsCount>0</FloorsCount>
+        </Building>
+        <FloorNumber>0</FloorNumber>
+        <FlatRoomsCount>9</FlatRoomsCount>
+        <TotalArea>0</TotalArea>
+        <KitchenArea>0</KitchenArea>
+        <ChildrenAllowed>True</ChildrenAllowed>
+        <PetsAllowed>True</PetsAllowed>
+        <Phones>
+            <PhoneSchema>
+                <CountryCode>+7</CountryCode>
+                <Number>999 999 999</Number>
+            </PhoneSchema>
+        </Phones>
+        <RoomArea>0</RoomArea>
+    </object>
+    <object>
+        <ExternalId>813p440m0OfnrSi1</ExternalId>
+        <Category>flatRent</Category>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
+        <RoomType>separate</RoomType>
+        <RepairType>cosmetic</RepairType>
+        <BargainTerms>
+            <LeaseTermType>longTerm</LeaseTermType>
+            <Price>12000</Price>
+            <Deposit>24000</Deposit>
+            <UtilitiesTerms>
+                <IncludedInPrice>False</IncludedInPrice>
+                <Price>0</Price>
+            </UtilitiesTerms>
+            <ClientFee>100%</ClientFee>
+        </BargainTerms>
+        <Building>
+            <MaterialType>bric</MaterialType>
+            <FloorsCount>0</FloorsCount>
+        </Building>
+        <FloorNumber>0</FloorNumber>
+        <FlatRoomsCount>9</FlatRoomsCount>
+        <TotalArea>0</TotalArea>
+        <KitchenArea>0</KitchenArea>
+        <ChildrenAllowed>True</ChildrenAllowed>
+        <PetsAllowed>True</PetsAllowed>
+        <Phones>
+            <PhoneSchema>
+                <CountryCode>+7</CountryCode>
+                <Number>999 999 999</Number>
+            </PhoneSchema>
+        </Phones>
+        <RoomArea>0</RoomArea>
+    </object>
+</feed>

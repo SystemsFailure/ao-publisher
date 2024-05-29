@@ -82,7 +82,14 @@ var CianPublisher = /** @class */ (function () {
     }
     CianPublisher.prototype.convert = function (adsData) { return this.convertedInXML(adsData); };
     CianPublisher.prototype.publish = function (data) { return this.public(data); };
-    CianPublisher.prototype.valid = function () { };
+    CianPublisher.prototype.valid = function (fileUrl) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, this.validXMLFile(fileUrl)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        }); });
+    };
     // Реализация
     CianPublisher.prototype.public = function (filePath) {
         return __awaiter(this, void 0, void 0, function () {
@@ -97,14 +104,19 @@ var CianPublisher = /** @class */ (function () {
                         row = _a.sent();
                         console.log('Файл успешно сохранен, его данные:', result);
                         console.log('row: ', row);
-                        return [2 /*return*/];
+                        // прописываем логику публикации, через отправку ссылки на почту import@cian.ru
+                        // Кстати по поводу возвращ значения, 
+                        // у авито будет возвращаться файл, получать его будет из row.localPath
+                        // читать через fs.readSyncFile(row.localPath, { encoding: "base64" }) - 
+                        // на выходе будет строка base64 формата; Ее мы и будет отправлять на публикацию
+                        return [2 /*return*/, row.storagePath];
                 }
             });
         });
     };
     CianPublisher.prototype.saveFileInStorage = function (filePath) {
         return __awaiter(this, void 0, void 0, function () {
-            var file, storage, fileName, result, url;
+            var file, storage, fileName, result, url, uploadResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -114,12 +126,25 @@ var CianPublisher = /** @class */ (function () {
                         if (!fileName) {
                             throw new Error('Не получилось извлечь имя файла');
                         }
-                        return [4 /*yield*/, storage.uploadFile(file, "files/xml/cian/".concat(fileName))];
+                        url = '';
+                        return [4 /*yield*/, new Promise(function (resolve, reject) {
+                                storage.uploadFileByState(file, "files/xml/cian/".concat(fileName), function (uploadUrl, snapshot) {
+                                    if (!snapshot) {
+                                        return reject(new Error("result is not valid: ".concat(snapshot)));
+                                    }
+                                    if (!uploadUrl) {
+                                        return reject(new Error("url is empty: ".concat(uploadUrl)));
+                                    }
+                                    resolve({ snapshot: snapshot, url: uploadUrl });
+                                });
+                            })];
                     case 1:
-                        result = _a.sent();
+                        uploadResult = _a.sent();
+                        result = uploadResult.snapshot;
+                        url = uploadResult.url;
                         return [4 /*yield*/, storage.getFile(result.metadata.fullPath)];
                     case 2:
-                        url = _a.sent();
+                        _a.sent();
                         return [2 /*return*/, {
                                 storagePath: url,
                                 name: result.metadata.name,
@@ -387,36 +412,44 @@ var CianPublisher = /** @class */ (function () {
         return copy;
     };
     // Валидация фида xml на сервисе циана
-    CianPublisher.prototype.validXMLFile = function () {
+    CianPublisher.prototype.validXMLFile = function (fileUrl) {
         return __awaiter(this, void 0, void 0, function () {
-            var url, response, _response, html, result, error_1;
+            var url, response, sleep, _response, html, result, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         url = 'https://www.cian.ru/api/validator/validate/';
+                        console.log("fileUrl", fileUrl);
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([1, 5, , 6]);
                         return [4 /*yield*/, axios_1.default.post(url, {
-                                url: "url" // Сюда надо прокидывать url xml файла,
+                                url: fileUrl // Сюда надо прокидывать url xml файла,
                             }, { headers: cian_headers_1.headers })];
                     case 2:
                         response = _a.sent();
                         if (!response.data) {
                             throw new Error('Данные для дальнейшей валидации не получены');
                         }
-                        return [4 /*yield*/, axios_1.default.get("https://www.cian.ru/nd/validator/?Id=".concat(response.data))];
+                        sleep = function (ms) {
+                            return new Promise(function (resolve) { return setTimeout(resolve, ms); });
+                        };
+                        return [4 /*yield*/, sleep(15000)];
                     case 3:
+                        _a.sent();
+                        return [4 /*yield*/, axios_1.default.get("https://www.cian.ru/nd/validator/?Id=".concat(response.data))];
+                    case 4:
                         _response = _a.sent();
+                        console.log("_response :", _response.data);
                         html = _response.data;
                         result = this.extractValidationResult(html);
-                        console.log('Результат провекри xml фида для avito: ', result);
-                        return [3 /*break*/, 5];
-                    case 4:
+                        console.log('Результат провекри xml фида для Циана: ', result);
+                        return [3 /*break*/, 6];
+                    case 5:
                         error_1 = _a.sent();
                         console.error('Error uploading file:', error_1);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

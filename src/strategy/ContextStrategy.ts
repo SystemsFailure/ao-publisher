@@ -48,7 +48,8 @@ export async function publishAds(adsData: any[]) {
 
   if (cianAds.length > 0) {
       const cianPublisher = new PublisherContext(new CianPublisher());
-      results.push(cianPublisher.executeStrategy(cianAds));
+      const url = await cianPublisher.executeStrategy(cianAds)
+      await cianPublisher.validXml(url);
   }
 
   if (youlaAds.length > 0) {

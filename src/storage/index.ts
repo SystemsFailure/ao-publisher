@@ -5,7 +5,8 @@ import {
     deleteObject,
     getDownloadURL,
     getMetadata,
-    UploadResult
+    UploadResult,
+    uploadBytesResumable
 } from "firebase/storage";
 
 import { initializeApp } from "firebase/app";
@@ -47,6 +48,25 @@ export class FirebaseStorage {
       return result;
     }
 
+    uploadFileByState(file: any, fileName: string, handler: any) {
+      const fileRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(fileRef, file, {
+        contentType: "text/xml"
+      });
+      uploadTask.on('state_changed',
+        () => {},
+        (error) => {
+          console.error("Error uploading file: ", error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log('SEARCH_PATTERN', url, uploadTask.snapshot);
+            handler(url, uploadTask.snapshot)
+          });
+        },
+      );
+    }
+
     // Удалить файл
     deleteFile(fileName: any) {
       const localRef = ref(storage, fileName);
@@ -56,13 +76,20 @@ export class FirebaseStorage {
         console.error(error);
       });
     }
-  
+    
+    // Draft - здесь нужно удалять всратый alt - 
+    // который введет к скачиванию файла, а не к его доступу по умолчанию
+    // Как я понял getDownloadURL() нету возможности менять его
+    // Поэтому сделал костыль
     async getFile(fileName: string) {
-      let URL;
+      const storage = getStorage();
       const localRef = ref(storage, fileName);
       const url = await getDownloadURL(localRef);
-      URL = url;
-      return URL;
+    
+      // Удаляем параметр alt=media из URL
+      // const viewUrl = url.replace('?alt=media&', '?').replace('&alt=media', '');
+    
+      return url;
     }
   
     // Получить метаданные файла

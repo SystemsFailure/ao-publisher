@@ -23,7 +23,7 @@ export default class AvitoPublisher implements PublisherStrategy {
 
   convert(adsData: any): any { return this.convertedInXML(adsData); }
   publish(data: any): any { return this.public(data); }
-  valid(filePath: string) { return this.validXMLFile() }
+  valid(fileUrl: string) { return this.validXMLFile() }
 
   // Реализация
   public checkExcelFile() {}

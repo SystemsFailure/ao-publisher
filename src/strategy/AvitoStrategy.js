@@ -85,7 +85,7 @@ var AvitoPublisher = /** @class */ (function () {
     }
     AvitoPublisher.prototype.convert = function (adsData) { return this.convertedInXML(adsData); };
     AvitoPublisher.prototype.publish = function (data) { return this.public(data); };
-    AvitoPublisher.prototype.valid = function (filePath) { return this.validXMLFile(); };
+    AvitoPublisher.prototype.valid = function (fileUrl) { return this.validXMLFile(); };
     // Реализация
     AvitoPublisher.prototype.checkExcelFile = function () { };
     AvitoPublisher.prototype.convertedInXML = function (objects) {

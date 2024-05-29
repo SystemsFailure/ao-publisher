@@ -35,7 +35,7 @@ function generateUniqueId(): string {
 export default class CianPublisher implements PublisherStrategy {
     convert(adsData: any): any { return this.convertedInXML(adsData); }
     publish(data: any): any { return this.public(data); }
-    valid(): any {}
+    async valid(fileUrl: string): Promise<any> { return await this.validXMLFile(fileUrl); }
 
     // Реализация
     private async public(filePath: string): Promise<any> {
@@ -44,10 +44,13 @@ export default class CianPublisher implements PublisherStrategy {
       console.log('Файл успешно сохранен, его данные:' , result);
       console.log('row: ', row)
 
-      // Здесь записываем файл в storage
-      // Также сохраняем его в mongodb
-      // Далее прописываем логику публикации, через отправку ссылки на почту import@cian.ru
+      // прописываем логику публикации, через отправку ссылки на почту import@cian.ru
 
+      // Кстати по поводу возвращ значения, 
+      // у авито будет возвращаться файл, получать его будет из row.localPath
+      // читать через fs.readSyncFile(row.localPath, { encoding: "base64" }) - 
+      // на выходе будет строка base64 формата; Ее мы и будет отправлять на публикацию
+      return row.storagePath;
     }
 
     private async saveFileInStorage(filePath: string): Promise<IFileData> {
@@ -57,8 +60,33 @@ export default class CianPublisher implements PublisherStrategy {
       if(!fileName) {
         throw new Error('Не получилось извлечь имя файла')
       }
-      const result: UploadResult = await storage.uploadFile(file, `files/xml/cian/${fileName}`);
-      const url: string = await storage.getFile(result.metadata.fullPath);
+
+      let result: any;
+      let url: string = '';
+
+      // Преобразуем uploadFileByState в метод, который возвращает промис
+      const uploadResult = await new Promise<{snapshot: UploadResult, url: string}>((resolve, reject) => {
+        storage.uploadFileByState(
+          file,
+          `files/xml/cian/${fileName}`,
+          (uploadUrl: string, snapshot: UploadResult) => {
+            if (!snapshot) {
+              return reject(new Error(`result is not valid: ${snapshot}`));
+            }
+          
+            if (!uploadUrl) {
+              return reject(new Error(`url is empty: ${uploadUrl}`));
+            }
+
+            resolve({snapshot, url: uploadUrl});
+          }
+        );
+      });
+
+      result = uploadResult.snapshot;
+      url = uploadResult.url;
+
+      await storage.getFile(result.metadata.fullPath);
 
       return {
         storagePath: url,
@@ -355,24 +383,29 @@ export default class CianPublisher implements PublisherStrategy {
     }
     
     // Валидация фида xml на сервисе циана
-    async validXMLFile() {
-      const url = 'https://www.cian.ru/api/validator/validate/';
-
+    async validXMLFile(fileUrl: string) {
+      const url: string = 'https://www.cian.ru/api/validator/validate/';
+      console.log("fileUrl", fileUrl)
       // Remembership: Нужно делать записи xml файла в mongodb с его uid и url после сохранения в удаленном хранилище
       try {
         const response = await axios.post(url, {
-          url: "url" // Сюда надо прокидывать url xml файла,
+          url: fileUrl // Сюда надо прокидывать url xml файла,
         }, { headers });
   
         if(!response.data) {
           throw new Error('Данные для дальнейшей валидации не получены')
         }
-  
+        
+        const sleep = (ms: number): Promise<void> => {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        };
+        await sleep(15_000);
+        
         const _response = await axios.get(`https://www.cian.ru/nd/validator/?Id=${response.data}`)
-  
+        console.log("_response :", _response.data);
         const html = _response.data;
         const result: ValidationResult = this.extractValidationResult(html)
-        console.log('Результат провекри xml фида для avito: ', result);
+        console.log('Результат провекри xml фида для Циана: ', result);
       } catch (error) {
         console.error('Error uploading file:', error);
       }

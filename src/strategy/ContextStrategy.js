@@ -79,7 +79,7 @@ function splitAdsByPlatform(ads) {
 // Стратегическая функция
 function publishAds(adsData) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, avitoAds, cianAds, youlaAds, results, avitoPublisher, cianPublisher, youlaPublisher;
+        var _a, avitoAds, cianAds, youlaAds, results, avitoPublisher, cianPublisher, url, youlaPublisher;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -93,10 +93,16 @@ function publishAds(adsData) {
                     _b.sent();
                     _b.label = 2;
                 case 2:
-                    if (cianAds.length > 0) {
-                        cianPublisher = new PublisherContext(new CianStrategy_1.default());
-                        results.push(cianPublisher.executeStrategy(cianAds));
-                    }
+                    if (!(cianAds.length > 0)) return [3 /*break*/, 5];
+                    cianPublisher = new PublisherContext(new CianStrategy_1.default());
+                    return [4 /*yield*/, cianPublisher.executeStrategy(cianAds)];
+                case 3:
+                    url = _b.sent();
+                    return [4 /*yield*/, cianPublisher.validXml(url)];
+                case 4:
+                    _b.sent();
+                    _b.label = 5;
+                case 5:
                     if (youlaAds.length > 0) {
                         youlaPublisher = new PublisherContext(new YoulaStrategy_1.default());
                         results.push(youlaPublisher.executeStrategy(youlaAds));

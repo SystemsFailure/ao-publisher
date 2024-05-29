@@ -87,6 +87,20 @@ var FirebaseStorage = /** @class */ (function () {
             });
         });
     };
+    FirebaseStorage.prototype.uploadFileByState = function (file, fileName, handler) {
+        var fileRef = (0, storage_1.ref)(storage, fileName);
+        var uploadTask = (0, storage_1.uploadBytesResumable)(fileRef, file, {
+            contentType: "text/xml"
+        });
+        uploadTask.on('state_changed', function () { }, function (error) {
+            console.error("Error uploading file: ", error);
+        }, function () {
+            (0, storage_1.getDownloadURL)(uploadTask.snapshot.ref).then(function (url) {
+                console.log('SEARCH_PATTERN', url, uploadTask.snapshot);
+                handler(url, uploadTask.snapshot);
+            });
+        });
+    };
     // Удалить файл
     FirebaseStorage.prototype.deleteFile = function (fileName) {
         var localRef = (0, storage_1.ref)(storage, fileName);
@@ -96,18 +110,24 @@ var FirebaseStorage = /** @class */ (function () {
             console.error(error);
         });
     };
+    // Draft - здесь нужно удалять всратый alt - 
+    // который введет к скачиванию файла, а не к его доступу по умолчанию
+    // Как я понял getDownloadURL() нету возможности менять его
+    // Поэтому сделал костыль
     FirebaseStorage.prototype.getFile = function (fileName) {
         return __awaiter(this, void 0, void 0, function () {
-            var URL, localRef, url;
+            var storage, localRef, url;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        storage = (0, storage_2.getStorage)();
                         localRef = (0, storage_1.ref)(storage, fileName);
                         return [4 /*yield*/, (0, storage_1.getDownloadURL)(localRef)];
                     case 1:
                         url = _a.sent();
-                        URL = url;
-                        return [2 /*return*/, URL];
+                        // Удаляем параметр alt=media из URL
+                        // const viewUrl = url.replace('?alt=media&', '?').replace('&alt=media', '');
+                        return [2 /*return*/, url];
                 }
             });
         });
