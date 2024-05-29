@@ -66,25 +66,16 @@ var xmljs = __importStar(require("xml-js"));
 var fs = __importStar(require("fs"));
 var axios_1 = __importDefault(require("axios"));
 var cheerio_1 = __importDefault(require("cheerio"));
+var crypto_1 = require("crypto");
+var cian_headers_1 = require("../helpers/cian.headers");
+var storage_1 = require("../storage");
 ;
 ;
-var headers = {
-    'Accept': '*/*',
-    'Accept-Encoding': 'gzip, deflate, br, zstd',
-    'Accept-Language': 'en-US,en;q=0.9,ru-RU;q=0.8,ru;q=0.7',
-    'Content-Type': 'application/json; charset=utf-8',
-    'Dnt': '1',
-    'Origin': 'https://www.cian.ru',
-    'Priority': 'u=1, i',
-    'Referer': 'https://www.cian.ru/api/validator/validate/',
-    'Sec-Ch-Ua': '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
-    'Sec-Ch-Ua-Mobile': '?0',
-    'Sec-Ch-Ua-Platform': '"Windows"',
-    'Sec-Fetch-Dest': 'empty',
-    'Sec-Fetch-Mode': 'cors',
-    'Sec-Fetch-Site': 'same-origin',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
-};
+function generateUniqueId() {
+    var randomData = (0, crypto_1.randomBytes)(16).toString('hex'); // Генерация рандомных данных
+    var hash = (0, crypto_1.createHash)('sha256').update(randomData).digest('hex'); // Создание SHA-256 хэша
+    return hash;
+}
 var CianPublisher = /** @class */ (function () {
     function CianPublisher() {
     }
@@ -92,19 +83,51 @@ var CianPublisher = /** @class */ (function () {
     CianPublisher.prototype.publish = function (data) { return this.public(data); };
     CianPublisher.prototype.valid = function () { };
     // Реализация
-    CianPublisher.prototype.public = function (data) {
-        // реализация публикации
+    CianPublisher.prototype.public = function (filePath) {
+        return __awaiter(this, void 0, void 0, function () {
+            var result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.saveFileInStorage(filePath)];
+                    case 1:
+                        result = _a.sent();
+                        console.log('Файл успешно сохранен, его данные:', result);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CianPublisher.prototype.saveFileInStorage = function (filePath) {
+        return __awaiter(this, void 0, void 0, function () {
+            var file, storage, fileName, result, url;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        file = fs.readFileSync(filePath);
+                        storage = new storage_1.FirebaseStorage();
+                        fileName = filePath.split('_')[1];
+                        console.log(fileName);
+                        if (!fileName) {
+                            throw new Error('Не получилось извлечь имя файла');
+                        }
+                        return [4 /*yield*/, storage.uploadFile(file, "files/xml/cian/".concat(fileName))];
+                    case 1:
+                        result = _a.sent();
+                        return [4 /*yield*/, storage.getFile(result.metadata.fullPath)];
+                    case 2:
+                        url = _a.sent();
+                        return [2 /*return*/, url];
+                }
+            });
+        });
     };
     CianPublisher.prototype.convertedInXML = function (objects) {
-        // adsData - это объект, который получается из основного excel файла
-        // в adsData попадают только те объекты, у которых platform = 'Циан'
-        // далее он сопостовляется с необходимой структурой фида Циана
-        // потом конвертируется в XML файл, который отправляется на почту циана, позже, если все
-        // отлично - начинается выгрузка всех обектов, из ранее сформированного фида
         var json = this.transformJson(objects);
         var xml = xmljs.js2xml(json, { compact: true, spaces: 4 });
-        fs.writeFileSync('src/tmp/converted/xml/cian/output.xml', xml);
+        var fileName = "src/tmp/converted/xml/cian/_".concat(generateUniqueId(), ".xml");
+        fs.writeFileSync(fileName, xml);
         console.log('successfuly formated in xml cian');
+        return fileName;
     };
     CianPublisher.prototype.transformJson = function (objects) {
         var _this = this;
@@ -122,20 +145,16 @@ var CianPublisher = /** @class */ (function () {
                     result['Category'] = transformResult['Category'];
                     result['Description'] = { _text: obj['Description'].toString().trim() };
                     result['Address'] = { _text: obj['Address'].toString().trim() };
-                    // Преобразование значений для BargainTerms.Price
-                    // Преобразование значений для RoomType
                     transformResult = _this.transformRoomType(obj, result);
                     if (!transformResult) {
                         return;
                     }
                     result['RoomType'] = transformResult['RoomType'];
-                    // result['RoomType'] = { _text: obj['RoomType'].toString().trim() };
                     transformResult = _this.transformRepairType(obj, result);
                     if (!transformResult) {
                         return;
                     }
                     result['RepairType'] = transformResult['RepairType'];
-                    // result['RepairType'] = { _text: obj['Renovation'].toString().trim() };
                     // PropertyRights пропускаем
                     result['BargainTerms'] = {
                         LeaseTermType: { _text: _this.convertLeaseType(obj['LeaseType']) },
@@ -352,7 +371,7 @@ var CianPublisher = /** @class */ (function () {
                         _a.trys.push([1, 4, , 5]);
                         return [4 /*yield*/, axios_1.default.post(url, {
                                 url: "url" // Сюда надо прокидывать url xml файла,
-                            }, { headers: headers })];
+                            }, { headers: cian_headers_1.headers })];
                     case 2:
                         response = _a.sent();
                         if (!response.data) {

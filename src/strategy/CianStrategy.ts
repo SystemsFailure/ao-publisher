@@ -5,6 +5,10 @@ import axios from "axios";
 import cheerio from 'cheerio';
 import { createHash, randomBytes } from "crypto";
 import { headers } from "../helpers/cian.headers";
+import { FirebaseStorage } from "../storage";
+import { UploadResult } from "firebase/storage";
+import { IFile } from "../database/models/File";
+import { FileService } from "../database/services/FileService";
 
 interface AdObject {
   Id: number;
@@ -14,6 +18,13 @@ interface ValidationResult {
   success: boolean;
   message?: string;
 };
+
+interface IFileData {
+  storagePath: string,
+  name: string,
+  localPath: string,
+  size: number
+}
 
 function generateUniqueId(): string {
   const randomData: string = randomBytes(16).toString('hex'); // Генерация рандомных данных
@@ -27,23 +38,57 @@ export default class CianPublisher implements PublisherStrategy {
     valid(): any {}
 
     // Реализация
-    private public(filePath: string): any {
-      // реализация публикации
+    private async public(filePath: string): Promise<any> {
+      const result: IFileData = await this.saveFileInStorage(filePath);
+      const row: IFile = await this.saveFileInDatabase(result)
+      console.log('Файл успешно сохранен, его данные:' , result);
+
+      // Здесь записываем файл в storage
+      // Также сохраняем его в mongodb
+      // Далее прописываем логику публикации, через отправку ссылки на почту import@cian.ru
+    }
+
+    private async saveFileInStorage(filePath: string): Promise<IFileData> {
+      const file: Buffer = fs.readFileSync(filePath)
+      const storage: FirebaseStorage = new FirebaseStorage();
+      const fileName: string = filePath.split('_')[1];
+      if(!fileName) {
+        throw new Error('Не получилось извлечь имя файла')
+      }
+      const result: UploadResult = await storage.uploadFile(file, `files/xml/cian/${fileName}`);
+      const url: string = await storage.getFile(result.metadata.fullPath);
+
+      return {
+        storagePath: url,
+        name: result.metadata.name,
+        localPath: filePath,
+        size: result.metadata.size,
+      };
+    }
+
+    private async saveFileInDatabase(data: IFileData) {
+      const fileService: FileService = new FileService();
+      const result: IFile = await fileService.createFile(data);
+      if(!result) {
+        throw new Error(`Результат записи файла в базу данных : ${result}`);
+      }
+      console.debug("Данный файл успешно записан в базу данных");
+      return result;
     }
   
-    private convertedInXML(objects: any): any {
+    private convertedInXML(objects: any) {
       const json = this.transformJson(objects);
       const xml: string = xmljs.js2xml(json, { compact: true, spaces: 4 });
       
-      const fileName: string = `src/tmp/converted/xml/cian/${generateUniqueId()}.xml`
+      const fileName: string = `src/tmp/converted/xml/cian/_${generateUniqueId()}.xml`
 
       fs.writeFileSync(fileName, xml);
-      console.log('successfuly formated in xml cian')
+      console.debug('successfuly formated in xml cian')
       
       return fileName;
     }
     
-    private transformJson(objects: AdObject[]): any {
+    private transformJson(objects: AdObject[]) {
       return {
         feed: {
           feed_version: 2,

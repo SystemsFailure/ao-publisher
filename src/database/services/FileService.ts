@@ -8,7 +8,7 @@ export class FileService {
     this.fileRepository = new FileRepository();
   }
 
-  async createFile(file: IFile): Promise<IFile> {
+  async createFile(file: any): Promise<IFile> {
     // Add any additional validation or business logic here
     return await this.fileRepository.create(file);
   }

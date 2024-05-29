@@ -2,10 +2,10 @@ import {
     ref,
     list,
     uploadBytes,
-    uploadBytesResumable,
     deleteObject,
     getDownloadURL,
-    getMetadata
+    getMetadata,
+    UploadResult
 } from "firebase/storage";
 
 import { initializeApp } from "firebase/app";
@@ -40,14 +40,10 @@ export class FirebaseStorage {
     }
   
     // Записать новый файл
-    uploadFile(file: any, fileName: any) {
-      const metadata = {
-        contentType: 'image/jpeg',
-      };
+    async uploadFile(file: any, fileName: any) {
       const localRef = ref(storage, fileName)
-      uploadBytes(localRef, file, metadata).then((snapshot: any) => {
-        console.log('Uploaded a blob or file!', snapshot);
-      });
+      const result: UploadResult = await uploadBytes(localRef, file)
+      return result;
     }
 
     // Удалить файл
@@ -61,16 +57,15 @@ export class FirebaseStorage {
     }
   
     // Получить один файл
-    getFile(fileName: any) {
-      let __URL__ = null;
+    async getFile(fileName: any) : Promise<string> {
+      let __URL__;
       const localRef = ref(storage, fileName);
-      getDownloadURL(localRef).then((url: any) => {
-        const __httpx__ = new XMLHttpRequest();
-        __httpx__.responseType = 'blob';
-        __httpx__.open('GET', url)
-        __httpx__.send();
-        __URL__ = url
-      })
+      const url = await getDownloadURL(localRef)
+      const __httpx__ = new XMLHttpRequest();
+      __httpx__.responseType = 'blob';
+      __httpx__.open('GET', url)
+      __httpx__.send();
+      __URL__ = url
       return __URL__;
     }
   

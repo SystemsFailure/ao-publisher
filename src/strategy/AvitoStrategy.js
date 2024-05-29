@@ -77,6 +77,7 @@ var axios_1 = __importDefault(require("axios"));
 var xmljs = __importStar(require("xml-js"));
 var fs = __importStar(require("fs"));
 var cheerio_1 = __importDefault(require("cheerio"));
+var avito_headers_1 = require("../helpers/avito.headers");
 var AvitoPublisher = /** @class */ (function () {
     function AvitoPublisher() {
         this.accessToken = '';
@@ -120,36 +121,17 @@ var AvitoPublisher = /** @class */ (function () {
     // Валидация xml фида через авито xml валидатор
     AvitoPublisher.prototype.validXMLFile = function () {
         return __awaiter(this, arguments, void 0, function (filePath) {
-            var url, headers, xmlData, response, subResponse, html, result, error_1;
+            var url, xmlData, response, subResponse, html, result, error_1;
             if (filePath === void 0) { filePath = 'src/tmp/converted/xml/avito/output.xml'; }
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         url = 'https://autoload.avito.ru/api/v2/public/xml_checker/upload/';
-                        headers = {
-                            'Accept': '*/*',
-                            'Accept-Encoding': 'gzip, deflate, br, zstd',
-                            'Accept-Language': 'en-US,en;q=0.9,ru-RU;q=0.8,ru;q=0.7',
-                            'Content-Type': 'text/xml',
-                            'Dnt': '1',
-                            'Origin': 'https://autoload.avito.ru',
-                            'Priority': 'u=1, i',
-                            'Referer': 'https://autoload.avito.ru/format/xmlcheck/',
-                            'Sec-Ch-Ua': '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
-                            'Sec-Ch-Ua-Mobile': '?0',
-                            'Sec-Ch-Ua-Platform': '"Windows"',
-                            'Sec-Fetch-Dest': 'empty',
-                            'Sec-Fetch-Mode': 'cors',
-                            'Sec-Fetch-Site': 'same-origin',
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
-                        };
-                        xmlData = fs.readFileSync(filePath, 
-                        // path.resolve(__dirname, filePath), 
-                        'utf-8');
+                        xmlData = fs.readFileSync(filePath, 'utf-8');
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, axios_1.default.post(url, xmlData, { headers: headers })];
+                        return [4 /*yield*/, axios_1.default.post(url, xmlData, { headers: avito_headers_1.headers })];
                     case 2:
                         response = _a.sent();
                         if (!response.data['data'] || !response.data['data']['id']) {

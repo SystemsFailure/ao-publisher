@@ -52,8 +52,8 @@ var PublisherContext = /** @class */ (function () {
         this.strategy = strategy;
     };
     PublisherContext.prototype.executeStrategy = function (adsData) {
-        var convertedData = this.strategy.convert(adsData);
-        return this.strategy.publish(convertedData);
+        var convertedFilePath = this.strategy.convert(adsData);
+        return this.strategy.publish(convertedFilePath);
     };
     PublisherContext.prototype.validXml = function (filePath) {
         return __awaiter(this, void 0, void 0, function () {

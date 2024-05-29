@@ -5,7 +5,6 @@ export interface IFile extends Document {
   localPath: string;
   storagePath: string;
   size: number;
-  lastModify: string;
 }
 
 const FileSchema = new Schema<IFile>({
@@ -13,7 +12,6 @@ const FileSchema = new Schema<IFile>({
   localPath: { type: String, required: true, unique: true },
   storagePath: { type: String, required: true, unique: true },
   size: { type: Number, required: false },
-  lastModify: { type: String, required: false },
 });
 
 export const File = model<IFile>('File', FileSchema);

@@ -144,4 +144,91 @@
                     +7 999 999 999
                   </ContactPhone>
     </Ad>
+    <Ad>
+        <Id>QVbf0yjpLBCoMJEx</Id>
+        <Category>Квартиры</Category>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
+        <OperationType>Сдам</OperationType>
+        <Price>0</Price>
+        <RoomType>Изолированные</RoomType>
+        <Renovation>Косметический</Renovation>
+        <PropertyRights>Собственник</PropertyRights>
+        <LeaseType>На длительный срок</LeaseType>
+        <HouseType>Кирпичный</HouseType>
+        <Floor>0</Floor>
+        <Floors>0</Floors>
+        <Rooms>Студия</Rooms>
+        <Square>0</Square>
+        <LeaseDeposit>1 месяц</LeaseDeposit>
+        <LeaseCommissionSize>0</LeaseCommissionSize>
+        <KitchenSpace>0</KitchenSpace>
+        <UtilityMeters>Оплачивается арендатором</UtilityMeters>
+        <OtherUtilities>Оплачивается арендатором</OtherUtilities>
+        <OtherUtilitiesPayment>0</OtherUtilitiesPayment>
+        <SmokingAllowed>Да</SmokingAllowed>
+        <ChildrenAllowed>Да</ChildrenAllowed>
+        <PetsAllowed>Да</PetsAllowed>
+        <ContactPhone>
+                    +7 999 999 999
+                  </ContactPhone>
+    </Ad>
+    <Ad>
+        <Id>QVbf0yjpLBCoMJEx</Id>
+        <Category>Квартиры</Category>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
+        <OperationType>Сдам</OperationType>
+        <Price>0</Price>
+        <RoomType>Изолированные</RoomType>
+        <Renovation>Косметический</Renovation>
+        <PropertyRights>Собственник</PropertyRights>
+        <LeaseType>На длительный срок</LeaseType>
+        <HouseType>Кирпичный</HouseType>
+        <Floor>0</Floor>
+        <Floors>0</Floors>
+        <Rooms>Студия</Rooms>
+        <Square>0</Square>
+        <LeaseDeposit>1 месяц</LeaseDeposit>
+        <LeaseCommissionSize>0</LeaseCommissionSize>
+        <KitchenSpace>0</KitchenSpace>
+        <UtilityMeters>Оплачивается арендатором</UtilityMeters>
+        <OtherUtilities>Оплачивается арендатором</OtherUtilities>
+        <OtherUtilitiesPayment>0</OtherUtilitiesPayment>
+        <SmokingAllowed>Да</SmokingAllowed>
+        <ChildrenAllowed>Да</ChildrenAllowed>
+        <PetsAllowed>Да</PetsAllowed>
+        <ContactPhone>
+                    +7 999 999 999
+                  </ContactPhone>
+    </Ad>
+    <Ad>
+        <Id>QVbf0yjpLBCoMJEx</Id>
+        <Category>Квартиры</Category>
+        <Description>Описание объекта...</Description>
+        <Address>Полный адрес объекта...</Address>
+        <OperationType>Сдам</OperationType>
+        <Price>0</Price>
+        <RoomType>Изолированные</RoomType>
+        <Renovation>Косметический</Renovation>
+        <PropertyRights>Собственник</PropertyRights>
+        <LeaseType>На длительный срок</LeaseType>
+        <HouseType>Кирпичный</HouseType>
+        <Floor>0</Floor>
+        <Floors>0</Floors>
+        <Rooms>Студия</Rooms>
+        <Square>0</Square>
+        <LeaseDeposit>1 месяц</LeaseDeposit>
+        <LeaseCommissionSize>0</LeaseCommissionSize>
+        <KitchenSpace>0</KitchenSpace>
+        <UtilityMeters>Оплачивается арендатором</UtilityMeters>
+        <OtherUtilities>Оплачивается арендатором</OtherUtilities>
+        <OtherUtilitiesPayment>0</OtherUtilitiesPayment>
+        <SmokingAllowed>Да</SmokingAllowed>
+        <ChildrenAllowed>Да</ChildrenAllowed>
+        <PetsAllowed>Да</PetsAllowed>
+        <ContactPhone>
+                    +7 999 999 999
+                  </ContactPhone>
+    </Ad>
 </Ads>
