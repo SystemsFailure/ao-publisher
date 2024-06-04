@@ -1,12 +1,3 @@
-// export interface AdData {
-//     id: string,
-//     title: string;
-//     description: string;
-//     price: number;
-//     category: string;
-//     location: string;
-// }
-
 export interface ConvertInXMLOptions {
     outputPath?: string;
     fileName?: string;

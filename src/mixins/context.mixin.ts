@@ -3,7 +3,7 @@ import { AdData } from "../types";
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-// Валидация схемы "файла"
+// Валидация схемы "файла" пока нужна больше для youla и циан
 function MixinValidateSchema<M extends Constructor>(Base: M) {
     return class extends Base {
         public validSchema(data: AdData[]) {
@@ -24,7 +24,7 @@ function MixinValidateSchema<M extends Constructor>(Base: M) {
     };
 }
 
-// Уникальное значение для id
+// генерация уникального значения для id объявления
 function MixinGenUniqueHash<M extends Constructor>(Base: M) {
     return class extends Base {
         public generateUniqueId(): string {

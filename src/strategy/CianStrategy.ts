@@ -402,7 +402,6 @@ export default class CianPublisher implements PublisherStrategy {
         await sleep(15_000);
         
         const _response = await axios.get(`https://www.cian.ru/nd/validator/?Id=${response.data}`)
-        console.log("_response :", _response.data);
         const html = _response.data;
         const result: ValidationResult = this.extractValidationResult(html)
         console.log('Результат провекри xml фида для Циана: ', result);
